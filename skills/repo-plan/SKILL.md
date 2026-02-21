@@ -19,7 +19,7 @@ Repo + issue number.
 
 ## Steps
 
-1. **Repo context check**: Do you have enough context about this repo's conventions and tooling? If not → report to user: "Need to run repo-scan first" and stop.
+1. **Repo context check**: Read `memory/scans/{owner}-{repo}.md`. If it doesn't exist → report "Need to run repo-scan first" and stop.
 2. Read the issue description, all comments, and linked PR (if any).
 3. Analyze the affected code — read relevant files.
 4. **Decide**: Is everything clear enough to make a plan?

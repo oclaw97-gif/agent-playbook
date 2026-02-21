@@ -14,19 +14,24 @@ Repo name or path.
 
 ## Steps
 
-1. Read `README.md` of the target repo — purpose, setup, dev commands
+1. Read `README.md` and project guide (`CLAUDE.md`, `CONTRIBUTING.md`, etc.) — purpose, setup, rules
 2. Read package manifest (`package.json`, `pyproject.toml`, `go.mod`, etc.) — deps, scripts
 3. Read linter/formatter config (biome.json, .eslintrc, pyproject.toml, etc.) — verify exact CLI flags
 4. Read CI config (`.github/workflows/`, etc.) — required checks
-5. Skim recent commits (`git log --oneline -10`) — infer conventions
+5. Check project structure (`ls` top-level dirs, `ls src/` or equivalent) — understand layout
+6. Skim recent commits (`git log --oneline -10`) — infer conventions
 
 ## Output
 
-Report to user:
+Save results to `memory/scans/{owner}-{repo}.md`:
 
 ```
-[repo-name] scan 결과
+# {owner}/{repo} scan
+Updated: {date}
+HEAD: {commit-hash}
+
 - Language/framework: ...
+- Structure: [top-level layout]
 - Build: [command]
 - Test: [command]
 - Lint: [command]
@@ -35,7 +40,10 @@ Report to user:
 - Conventions: [branch pattern, commit format, etc.]
 ```
 
+Also report the same to user.
+
 ## Rules
 
-- Do NOT modify any files or labels.
+- Do NOT modify any repo files or labels.
 - If a command or tool version is unclear, run `--help` or `--version` to confirm — do not guess.
+- Overwrite the existing scan file if it already exists.

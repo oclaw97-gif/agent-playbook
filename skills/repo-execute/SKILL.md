@@ -30,7 +30,7 @@ If any condition fails → stop, report which condition failed.
 
 ### Case A: No PR yet (first execution)
 
-1. Repo context check: do you know the build/test/lint commands? If not → report "Need repo-scan" and stop.
+1. Repo context check: read `memory/scans/{owner}-{repo}.md`. If it doesn't exist → report "Need repo-scan" and stop.
 2. Create branch: `agent/{issue-number}-{brief-description}`
 3. Implement changes per the plan.
 4. Run test, lint, build — fix issues. If stuck after 1 retry → stop, report failure.
