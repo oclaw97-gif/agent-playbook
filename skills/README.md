@@ -13,16 +13,16 @@ Small, focused tasks. Each skill has a clear precondition and output.
 ```
 agent:plan ◄──────────────────┐
     │                         │
-  repo-plan (plan 코멘트)     │ 유저: 재논의 필요
-    │                         │
-유저: agent:wip 부여          │
-    │                         │
+  repo-plan (plan comment)    │ user: need to re-discuss
+    |                         │
+user: apply agent:wip         │
+    ↓                         │
 agent:wip ────────────────────┘
-    │
-  repo-execute (구현/PR/리뷰반영)
-    │
-유저: merge + agent:done 부여
-    │
+    |
+  repo-execute (implement/PR/review feedback)
+    |
+user: merge + apply agent:done
+    ↓
 agent:done
 ```
 
