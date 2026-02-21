@@ -1,10 +1,6 @@
 # Agent Playbook
 
-Operational playbooks and skills for autonomous AI agents working on continuous and delicate tasks.
-
-Each playbook is a self-contained guide that an agent reads and follows.
-Clone this repo into the agent's workspace and point it to the relevant
-playbook.
+Operational skills for autonomous AI agents working on continuous and delicate tasks.
 
 ## Agent Behavior Principles
 
@@ -16,39 +12,52 @@ playbook.
 
 See [`skills/README.md`](skills/README.md).
 
-## Playbooks
+## Tutorial
 
-| Playbook | Purpose |
-|----------|---------|
-| [`maintain-repo/`](maintain-repo/PLAYBOOK.md) | Maintain a repo by working on open GitHub issues. Periodic runs.|
+Setup and example workflow using OpenClaw via Discord.
 
-## Usage
-
-1. Clone this repo where your agent can access it.
-2. Tell the agent to read `maintain-repo/PLAYBOOK.md` and follow it.
-3. The playbook will guide the agent through the rest (which phase files to
-   load, how to select issues, how to report).
-
-### Example (OpenClaw via Discord)
+### 1. Setup
 
 ```
-Clone github.com/dbqls9713/agent-playbook (if not already cloned), then read
-maintain-repo/PLAYBOOK.md and follow it to maintain
-github.com/dbqls9713/valuation. Report results here.
+# Have the agent clone this repo
+Can you fetch https://github.com/yuv-labs/agent-playbook?
+
+# Have the agent install the skills
+Can you transplant agent-playbook/skills into your skill-set?
+
+# Clone the target repo and scan it
+fetch https://github.com/yuv-labs/baduk
+repo-scan baduk
 ```
 
-## Structure
+### 2. Workflow
 
-Each playbook follows a modular structure to minimize agent context usage:
+Add `agent:plan` label to an issue, then:
 
 ```
-[playbook-name]/
-├── PLAYBOOK.md       ← Entry point (always loaded, small)
-├── RUNBOOK.md        ← Failure/recovery (loaded on error)
-├── phases/           ← Loaded per-phase, only when needed
-├── templates/        ← Issue/PR body templates
-└── examples/         ← Reference examples (first-time only)
+repo-plan baduk 29          # Agent posts a plan comment on the issue
 ```
 
-The agent loads `PLAYBOOK.md` first, which tells it exactly which other
-files to load depending on the current task.
+Review the plan. If good, change label to `agent:wip`, then:
+
+```
+repo-execute baduk 29       # Agent implements and creates a PR
+```
+
+After reviewing the PR and leaving feedback, run again:
+
+```
+repo-execute baduk 29       # Agent addresses review feedback
+```
+
+If re-discussion is needed, change label back to `agent:plan`:
+
+```
+repo-plan baduk 29          # Back to planning
+```
+
+### 3. Reference
+
+- [yuv-labs/baduk#18](https://github.com/yuv-labs/baduk/issues/18) → [PR #28](https://github.com/yuv-labs/baduk/pull/28)
+- [yuv-labs/baduk#29](https://github.com/yuv-labs/baduk/issues/29) → [PR #30](https://github.com/yuv-labs/baduk/pull/30)
+- [yuv-labs/baduk#17](https://github.com/yuv-labs/baduk/issues/17) → [PR #31](https://github.com/yuv-labs/baduk/pull/31)
