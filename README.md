@@ -12,6 +12,22 @@ Operational skills for autonomous AI agents working on continuous and delicate t
 
 See [`skills/README.md`](skills/README.md).
 
+## Setup Modes
+
+The agent can work in two modes:
+
+### Fork-based (recommended)
+
+The agent forks the target repo and pushes branches to its fork. PRs are created against the base repo. The owner merges.
+
+Scripts like `propose-rule.sh` automatically sync the fork with the upstream repo via `gh repo sync` before branching.
+
+### Direct push
+
+The agent has push access to the base repo. No fork or sync needed — `git pull origin main` is sufficient.
+
+Both modes are supported by all scripts without extra configuration.
+
 ## Tutorial
 
 Setup and example workflow using OpenClaw via Discord.

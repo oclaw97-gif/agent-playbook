@@ -36,7 +36,7 @@ If any condition fails → stop, report which condition failed.
 4. Implement changes per the plan.
 5. Run test, lint, build — fix issues. If stuck after 1 retry → stop, report failure.
 6. Commit: `[type] description (#issue-number)`
-7. Push and create PR linking the issue (`Closes #N`).
+7. Push to origin (your fork) and create PR against the base repo linking the issue (`Closes #N`).
 8. Post a summary comment on the issue.
 
 ### Case B: PR exists with review feedback

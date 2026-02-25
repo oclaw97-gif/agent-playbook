@@ -26,7 +26,8 @@ TARGET_PATH="$TARGET_DIR/$FILENAME"
 # Extract title from first ## heading
 TITLE=$(grep '^## ' "$RULE_FILE" | head -1 | sed 's/^## //')
 
-# Create branch from main
+# Sync fork with upstream, then create branch
+gh repo sync --branch main 2>/dev/null || true
 git checkout main
 git pull --ff-only origin main 2>/dev/null || true
 git checkout -b "$BRANCH"

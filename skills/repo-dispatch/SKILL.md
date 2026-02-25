@@ -14,8 +14,8 @@ Repo(s) (`owner/repo` or comma-separated list `owner/repo1,owner/repo2`).
 
 ## Steps
 
-1. Pull latest: `git -C agent-playbook pull origin main`
-2. Run `bash agent-playbook/scripts/dispatch.sh <repos> <your-github-username>`
+1. Sync agent-playbook: `gh repo sync --branch main -C agent-playbook 2>/dev/null; git -C agent-playbook pull origin main`
+2. Run `bash agent-playbook/scripts/dispatch.sh <owner/repo> <your-github-username>`
 3. Parse the output:
    - If the first line starts with `RUN` → extract skill name, repo, and issue number, then execute it.
    - If no `RUN` lines (only `WAIT` or "Nothing to do") → report "Nothing to do" and stop.

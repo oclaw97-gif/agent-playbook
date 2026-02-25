@@ -14,7 +14,7 @@ None. Target repos are defined in `codebible/_last_collected.yaml`.
 
 ## Steps
 
-1. Pull latest: `git -C agent-playbook pull origin main`
+1. Sync agent-playbook: `gh repo sync --branch main -C agent-playbook 2>/dev/null; git -C agent-playbook pull origin main`
 2. Run `bash agent-playbook/scripts/collect-comments.sh` — outputs comments from the oldest unprocessed merged PR.
 3. For each comment, decide: does this teach a **reusable coding rule** (HOW to code)?
    - **Yes** → candidate. Continue to step 4.
