@@ -10,12 +10,12 @@ Run the dispatch script, then execute the top task.
 
 ## Input
 
-Repo (`owner/repo`).
+Repo(s) (`owner/repo` or comma-separated list `owner/repo1,owner/repo2`).
 
 ## Steps
 
 1. Pull latest: `git -C agent-playbook pull origin main`
-2. Run `bash agent-playbook/scripts/dispatch.sh <owner/repo> <your-github-username>`
+2. Run `bash agent-playbook/scripts/dispatch.sh <repos> <your-github-username>`
 3. Parse the output:
    - If the first line starts with `RUN` → extract skill name, repo, and issue number, then execute it.
    - If no `RUN` lines (only `WAIT` or "Nothing to do") → report "Nothing to do" and stop.
@@ -24,12 +24,12 @@ Repo (`owner/repo`).
 ### Parsing example
 
 ```
-RUN   repo-plan   #23  Fix mobile UI layout
+RUN   repo-plan   baduk #23  Fix mobile UI layout
 ```
 → run `repo-plan baduk 23`
 
 ```
-RUN   repo-execute #24  Touch placement
+RUN   repo-execute baduk #24  Touch placement
 ```
 → run `repo-execute baduk 24`
 
