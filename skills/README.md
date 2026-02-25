@@ -4,6 +4,7 @@ Small, focused tasks. Each skill has a clear precondition and output.
 
 | Skill | Precondition | Does |
 |-------|-------------|------|
+| `repo-dispatch` | None | Run dispatch script, execute top task |
 | `repo-scan` | None | Read repo docs/conventions, report to user |
 | `repo-plan` | `agent:plan` label | Analyze issue, post plan comment |
 | `repo-execute` | `agent:wip` label + user acted last | Implement plan or address PR feedback |

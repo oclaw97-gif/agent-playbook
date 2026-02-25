@@ -27,8 +27,8 @@
 # | no label    | -         | -    | (not scanned)      |
 #
 # ## TODO
-# - [ ] Turn this into a proper skill (repo-dispatch) so the agent can run it
-# - [ ] When it becomes a skill, provide the decision matrix above as context
+# - [x] Turn this into a proper skill (repo-dispatch) so the agent can run it
+# - [x] When it becomes a skill, provide the decision matrix above as context
 #       in SKILL.md so the agent understands the logic it's executing
 # - [ ] Add dry-run vs execute mode (currently output-only)
 
@@ -37,16 +37,18 @@ set -euo pipefail
 REPO="${1:?Usage: dispatch.sh <owner/repo> <agent-username>}"
 AGENT="${2:?Usage: dispatch.sh <owner/repo> <agent-username>}"
 
-# Find the most recent actor on an issue (and its linked PR).
+# Find the most recent human actor on an issue (and its linked PR).
+# Ignores bot accounts (user.type == "Bot").
 # Returns: "<timestamp> <actor>" (e.g. "2026-02-25T12:00:00Z yuv")
 last_actor() {
   local number="$1"
   local latest=""
 
-  # Issue: comments
+  # Issue: comments (exclude bots)
   local comment
   comment=$(gh api "repos/$REPO/issues/$number/comments" \
-    --jq 'if length > 0 then .[-1] | "\(.created_at) \(.user.login)" else empty end' 2>/dev/null || true)
+    --jq '[.[] | select(.user.type != "Bot")] |
+      if length > 0 then .[-1] | "\(.created_at) \(.user.login)" else empty end' 2>/dev/null || true)
   [[ -n "$comment" && "$comment" > "$latest" ]] && latest="$comment"
 
   # Issue: label events
@@ -62,22 +64,25 @@ last_actor() {
     --jq ".[] | select(.headRefName | startswith(\"agent/$number-\")) | .number" 2>/dev/null | head -1)
 
   if [[ -n "$pr_number" ]]; then
-    # PR: review comments
+    # PR: review comments (exclude bots)
     local pr_comment
     pr_comment=$(gh api "repos/$REPO/pulls/$pr_number/comments" \
-      --jq 'if length > 0 then .[-1] | "\(.created_at) \(.user.login)" else empty end' 2>/dev/null || true)
+      --jq '[.[] | select(.user.type != "Bot")] |
+        if length > 0 then .[-1] | "\(.created_at) \(.user.login)" else empty end' 2>/dev/null || true)
     [[ -n "$pr_comment" && "$pr_comment" > "$latest" ]] && latest="$pr_comment"
 
-    # PR: reviews
+    # PR: reviews (exclude bots)
     local review
     review=$(gh api "repos/$REPO/pulls/$pr_number/reviews" \
-      --jq 'if length > 0 then .[-1] | "\(.submitted_at) \(.user.login)" else empty end' 2>/dev/null || true)
+      --jq '[.[] | select(.user.type != "Bot")] |
+        if length > 0 then .[-1] | "\(.submitted_at) \(.user.login)" else empty end' 2>/dev/null || true)
     [[ -n "$review" && "$review" > "$latest" ]] && latest="$review"
 
-    # PR: issue-style comments (general PR comments)
+    # PR: issue-style comments (exclude bots)
     local pr_issue_comment
     pr_issue_comment=$(gh api "repos/$REPO/issues/$pr_number/comments" \
-      --jq 'if length > 0 then .[-1] | "\(.created_at) \(.user.login)" else empty end' 2>/dev/null || true)
+      --jq '[.[] | select(.user.type != "Bot")] |
+        if length > 0 then .[-1] | "\(.created_at) \(.user.login)" else empty end' 2>/dev/null || true)
     [[ -n "$pr_issue_comment" && "$pr_issue_comment" > "$latest" ]] && latest="$pr_issue_comment"
   fi
 
