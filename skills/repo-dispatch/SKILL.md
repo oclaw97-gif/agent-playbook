@@ -14,11 +14,12 @@ Repo (`owner/repo`).
 
 ## Steps
 
-1. Run `bash agent-playbook/scripts/dispatch.sh <owner/repo> <your-github-username>`
-2. Parse the output:
+1. Pull latest: `git -C agent-playbook pull origin main`
+2. Run `bash agent-playbook/scripts/dispatch.sh <owner/repo> <your-github-username>`
+3. Parse the output:
    - If the first line starts with `RUN` → extract skill name, repo, and issue number, then execute it.
    - If no `RUN` lines (only `WAIT` or "Nothing to do") → report "Nothing to do" and stop.
-3. Execute only the **first** RUN line. One task per dispatch.
+4. Execute only the **first** RUN line. One task per dispatch.
 
 ### Parsing example
 

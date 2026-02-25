@@ -31,20 +31,22 @@ If any condition fails → stop, report which condition failed.
 ### Case A: No PR yet (first execution)
 
 1. Repo context check: read `memory/scans/{owner}-{repo}.md`. If it doesn't exist → report "Need repo-scan" and stop.
-2. Create branch: `agent/{issue-number}-{brief-description}`
-3. Implement changes per the plan.
-4. Run test, lint, build — fix issues. If stuck after 1 retry → stop, report failure.
-5. Commit: `[type] description (#issue-number)`
-6. Push and create PR linking the issue (`Closes #N`).
-7. Post a summary comment on the issue.
+2. Read `agent-playbook/codebible/general/` and `agent-playbook/codebible/{repo-language}/` as coding reference.
+3. Create branch: `agent/{issue-number}-{brief-description}`
+4. Implement changes per the plan.
+5. Run test, lint, build — fix issues. If stuck after 1 retry → stop, report failure.
+6. Commit: `[type] description (#issue-number)`
+7. Push and create PR linking the issue (`Closes #N`).
+8. Post a summary comment on the issue.
 
 ### Case B: PR exists with review feedback
 
 1. Read all unaddressed review comments on the PR.
-2. Implement requested changes.
-3. Run test, lint, build.
-4. Push fixup commits.
-5. Reply to each review comment **on the PR itself** (not Discord/Slack) with what was done.
+2. Read `agent-playbook/codebible/general/` and `agent-playbook/codebible/{repo-language}/` as coding reference.
+3. Implement requested changes.
+4. Run test, lint, build.
+5. Push fixup commits.
+6. Reply to each review comment **on the PR itself** (not Discord/Slack) with what was done.
 
 ## Rules
 

@@ -8,6 +8,7 @@ Small, focused tasks. Each skill has a clear precondition and output.
 | `repo-scan` | None | Read repo docs/conventions, report to user |
 | `repo-plan` | `agent:plan` label | Analyze issue, post plan comment |
 | `repo-execute` | `agent:wip` label + user acted last | Implement plan or address PR feedback |
+| `codebible-collect` | None | Scrape PR comments, propose new codebible rules via PR |
 
 ## Labels (user-managed only)
 
